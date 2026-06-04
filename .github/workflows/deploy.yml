@@ -24,6 +24,7 @@ jobs:
         uses: withastro/action@v3
         with:
           path: ./portfolio # The root location of your Astro project
+          node-version: 22 # Specify Node.js version compatible with your project
 
   deploy:
     needs: build
