@@ -4,11 +4,17 @@ import ProjectCard from '../components/ProjectCard.astro';
 import LivePreview from '../components/LivePreview.jsx';
 import LanguagePicker from '../components/LanguagePicker.astro';
 
-import { getCurrentLanguage, getTranslations } from '../lib/i18n';
+import { getTranslations, type SupportedLanguage } from '../lib/i18n';
 import { getAllProjects, getMobileApps } from '../lib/projects';
 
-// 1. Pobierz dane (zgodnie z zasadami Clean Architecture)
-const lang = getCurrentLanguage(Astro.url);
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'pl' } },
+  ];
+}
+
+const { lang } = Astro.params as { lang: SupportedLanguage };
 const t = getTranslations(lang);
 const allProjects = await getAllProjects(lang);
 const mobileApps = await getMobileApps(lang);

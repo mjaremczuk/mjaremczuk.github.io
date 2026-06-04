@@ -5,17 +5,16 @@ interface Props {
 
 const { currentLang } = Astro.props;
 
-// Lista obsługiwanych języków z ich flagami i etykietami
 const languages = [
-	{ code: 'en', flag: '🇬🇧', label: 'EN' },
-	{ code: 'pl', flag: '🇵🇱', label: 'PL' }
+	{ code: 'en', flag: '🇬🇧', label: 'EN', href: '/en/' },
+	{ code: 'pl', flag: '🇵🇱', label: 'PL', href: '/pl/' }
 ];
 ---
 
 <div class="language-picker">
 	{languages.map((lang) => (
 		<a 
-			href={`?lang=${lang.code}`} 
+			href={lang.href} 
 			class={`lang-btn ${currentLang === lang.code ? 'active' : ''}`}
 			aria-label={`Switch to ${lang.label}`}
 		>
@@ -34,8 +33,8 @@ const languages = [
 		border: 1px solid var(--color-border-subtle);
 		padding: 4px;
 		border-radius: 99px;
-		align-self: flex-end; /* Pozycjonowanie po prawej stronie */
-		margin-bottom: -20px; /* Lekkie przesunięcie w górę, aby wyrównać z Hero */
+		align-self: flex-end;
+		margin-bottom: -20px;
 		z-index: 10;
 	}
 
@@ -71,7 +70,7 @@ const languages = [
 
 	@media (max-width: 768px) {
 		.language-picker {
-			align-self: flex-start; /* Na telefonach wyrównanie do lewej */
+			align-self: flex-start;
 			margin-bottom: 0;
 		}
 	}
