@@ -1,5 +1,17 @@
 ---
-// Ten plik przekierowuje użytkownika ze ścieżki głównej (/) 
-// na domyślną wersję językową (/en/)
-return Astro.redirect('/en/');
+// This file redirects the user from the root path (/)
+// to the default language version (/en/).
+// We use a meta refresh tag for instant, client-side redirection
+// that works perfectly with static site generators like GitHub Pages.
 ---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="refresh" content="0;url=/en/" />
+		<title>Redirecting...</title>
+	</head>
+	<body>
+		<p>If you are not redirected automatically, <a href="/en/">follow this link</a>.</p>
+	</body>
+</html>
