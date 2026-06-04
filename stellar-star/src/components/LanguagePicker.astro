@@ -1,0 +1,78 @@
+---
+interface Props {
+	currentLang: 'en' | 'pl';
+}
+
+const { currentLang } = Astro.props;
+
+// Lista obsługiwanych języków z ich flagami i etykietami
+const languages = [
+	{ code: 'en', flag: '🇬🇧', label: 'EN' },
+	{ code: 'pl', flag: '🇵🇱', label: 'PL' }
+];
+---
+
+<div class="language-picker">
+	{languages.map((lang) => (
+		<a 
+			href={`?lang=${lang.code}`} 
+			class={`lang-btn ${currentLang === lang.code ? 'active' : ''}`}
+			aria-label={`Switch to ${lang.label}`}
+		>
+			<span class="lang-flag">{lang.flag}</span>
+			<span class="lang-label">{lang.label}</span>
+		</a>
+	))}
+</div>
+
+<style>
+	.language-picker {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid var(--color-border-subtle);
+		padding: 4px;
+		border-radius: 99px;
+		align-self: flex-end; /* Pozycjonowanie po prawej stronie */
+		margin-bottom: -20px; /* Lekkie przesunięcie w górę, aby wyrównać z Hero */
+		z-index: 10;
+	}
+
+	.lang-btn {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px 12px;
+		border-radius: 99px;
+		text-decoration: none;
+		color: var(--color-text-dim);
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		font-weight: 500;
+		transition: all 0.2s ease;
+	}
+
+	.lang-btn:hover {
+		color: var(--color-text-primary);
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.lang-btn.active {
+		color: #ffffff;
+		background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
+		box-shadow: 0 2px 10px rgba(0, 242, 254, 0.2);
+	}
+
+	.lang-flag {
+		font-size: 1.1rem;
+		line-height: 1;
+	}
+
+	@media (max-width: 768px) {
+		.language-picker {
+			align-self: flex-start; /* Na telefonach wyrównanie do lewej */
+			margin-bottom: 0;
+		}
+	}
+</style>

@@ -1,0 +1,175 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Michał Jaremczuk's Portfolio" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<!-- Particle background container -->
+		<div id="particles-bg"></div>
+
+		<!-- Main content wrapper to sit above particles -->
+		<div class="content-wrapper">
+			<slot />
+		</div>
+
+		<!-- tsparticles library from CDN -->
+		<script is:inline src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+		
+		<script is:inline>
+			document.addEventListener('DOMContentLoaded', async () => {
+				await tsParticles.load("particles-bg", {
+					background: {
+						color: {
+							value: "transparent",
+						},
+					},
+					fpsLimit: 60,
+					interactivity: {
+						events: {
+							onHover: {
+								enable: true,
+								mode: "grab",
+							},
+							onClick: {
+								enable: true,
+								mode: "push",
+							},
+							resize: true,
+						},
+						modes: {
+							grab: {
+								distance: 140,
+								links: {
+									opacity: 1,
+								},
+							},
+							push: {
+								quantity: 2,
+							},
+						},
+					},
+					particles: {
+						number: {
+							value: 60,
+							density: {
+								enable: true,
+								area: 800,
+							},
+						},
+						color: {
+							value: "#ffffff",
+						},
+						shape: {
+							type: "circle",
+						},
+						opacity: {
+							value: 0.3,
+							random: true,
+						},
+						size: {
+							value: 3,
+							random: true,
+						},
+						links: {
+							color: "#ffffff",
+							distance: 150,
+							enable: true,
+							opacity: 0.2,
+							width: 1,
+						},
+						move: {
+							enable: true,
+							speed: 0.8,
+							direction: "none",
+							random: false,
+							straight: false,
+							outModes: {
+								default: "bounce",
+							},
+						},
+					},
+					detectRetina: true,
+				});
+			});
+		</script>
+
+		<style is:global>
+			:root {
+				--color-bg: #03040c;
+				--color-bg-card: rgba(16, 19, 36, 0.5);
+				--color-text-primary: #f0f2f5;
+				--color-text-secondary: #b0b8c4;
+				--color-text-muted: #808a9a;
+				--color-text-dim: #606a7c;
+				--color-border-subtle: rgba(255, 255, 255, 0.08);
+				--color-border-glow: rgba(255, 255, 255, 0.15);
+				--color-accent-primary: #00f2fe;
+				--color-accent-secondary: #7000ff;
+				--color-accent-tertiary: #ff007f;
+				--font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+				--font-mono: 'Roboto Mono', 'Fira Code', 'JetBrains Mono', monospace;
+				--shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.1);
+			}
+
+			html, body {
+				margin: 0;
+				padding: 0;
+				min-height: 100vh;
+				font-family: var(--font-sans);
+				color: var(--color-text-primary);
+				scroll-behavior: smooth;
+				background-color: transparent; /* Zmiana: przezroczyste tło na body */
+			}
+
+			#particles-bg {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 0; /* Tło znajduje się na samym dole (z-index 0) */
+				background-color: var(--color-bg); /* Nasz kolor tła jest teraz tutaj */
+			}
+
+			/* Wrapper na główną treść, aby była powyżej cząsteczek i łapała kliknięcia */
+			.content-wrapper {
+				position: relative;
+				z-index: 10;
+				pointer-events: none; /* Pozwala na klikanie przez wrapper w puste miejsca... */
+			}
+
+			/* ...ale wszystkie dzieci (nasze sekcje) łapią zdarzenia kursora */
+			.content-wrapper > * {
+				pointer-events: auto;
+			}
+
+			/* General styles */
+			h1, h2, h3, h4, h5, h6 {
+				margin: 0;
+				font-weight: 600;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			a {
+				color: var(--color-accent-primary);
+				text-decoration: none;
+			}
+		</style>
+	</body>
+</html>

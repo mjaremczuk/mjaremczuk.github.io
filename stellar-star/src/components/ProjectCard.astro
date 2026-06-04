@@ -1,0 +1,366 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	tags?: string[];
+	stars?: number;
+	forks?: number;
+	metric?: string;
+	metricValue?: number; // 0 to 100
+	href: string;
+	status?: 'active' | 'development' | 'experimental' | 'archived';
+	accent?: 'primary' | 'secondary' | 'tertiary';
+}
+
+const {
+	title,
+	description,
+	tags = [],
+	stars,
+	forks,
+	metric,
+	metricValue,
+	href,
+	status = 'active',
+	accent = 'primary'
+} = Astro.props;
+
+// Accent color mapping
+const accentColor = `var(--color-accent-${accent})`;
+const glowColor = `color-mix(in oklab, ${accentColor} 8%, transparent)`;
+const hoverBorderColor = `color-mix(in oklab, ${accentColor} 30%, transparent)`;
+
+// Status color mapping
+const statusColors = {
+	active: { bg: '#22c55e', text: 'Active' },
+	development: { bg: '#3b82f6', text: 'In Progress' },
+	experimental: { bg: '#a855f7', text: 'Experimental' },
+	archived: { bg: '#64748b', text: 'Archived' }
+};
+
+const currentStatus = statusColors[status] || statusColors.active;
+---
+
+<article class="project-card" style={`--accent-glow: ${accentColor}; --card-glow-bg: ${glowColor}; --card-hover-border: ${hoverBorderColor};`}>
+	<!-- Top details row -->
+	<header class="card-header">
+		<div class="status-badge">
+			<span class="status-dot" style={`background-color: ${currentStatus.bg}; box-shadow: 0 0 10px ${currentStatus.bg}80;`}></span>
+			<span class="status-text">{currentStatus.text}</span>
+		</div>
+		<span class="tech-icon" aria-hidden="true">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+			</svg>
+		</span>
+	</header>
+
+	<!-- Project info -->
+	<div class="card-body">
+		<h3>
+			<a href={href} class="project-link" target="_blank" rel="noopener noreferrer">
+				{title}
+				<span class="sr-only">Opens in new tab</span>
+			</a>
+		</h3>
+		<p class="description">{description}</p>
+	</div>
+
+	<!-- Interactive Tags -->
+	{tags.length > 0 && (
+		<ul class="tags-list" aria-label="Project technologies">
+			{tags.map((tag) => (
+				<li>{tag}</li>
+			))}
+		</ul>
+	)}
+
+	<!-- Dynamic Stats & Progress Indicators -->
+	<footer class="card-footer">
+		<!-- Github Stats -->
+		<div class="stats-row">
+			{typeof stars === 'number' && (
+				<div class="stat-item" title={`${stars} GitHub stars`}>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+					</svg>
+					<span>{stars}</span>
+				</div>
+			)}
+			{typeof forks === 'number' && (
+				<div class="stat-item" title={`${forks} GitHub forks`}>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="18" cy="18" r="3" />
+						<circle cx="6" cy="6" r="3" />
+						<circle cx="6" cy="18" r="3" />
+						<path d="M18 15V9a4 4 0 0 0-4-4H9" />
+						<line x1="6" y1="9" x2="6" y2="15" />
+					</svg>
+					<span>{forks}</span>
+				</div>
+			)}
+		</div>
+
+		<!-- Dynamic Metric (e.g. Code Coverage, Speed, Downloads) -->
+		{metric && (
+			<div class="metric-container">
+				<div class="metric-header">
+					<span class="metric-label">{metric}</span>
+					{typeof metricValue === 'number' && <span class="metric-value">{metricValue}%</span>}
+				</div>
+				{typeof metricValue === 'number' && (
+					<div class="progress-bar-bg" aria-hidden="true">
+						<div class="progress-bar-fill" style={`width: ${metricValue}%; background: linear-gradient(90deg, var(--accent-glow) 0%, var(--color-accent-secondary) 100%);`}></div>
+					</div>
+				)}
+			</div>
+		)}
+	</footer>
+</article>
+
+<style>
+	.project-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		background: var(--color-bg-card);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: 16px;
+		padding: 24px;
+		transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+					border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+					box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+					background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+		backdrop-filter: blur(12px) saturate(160%);
+		-webkit-backdrop-filter: blur(12px) saturate(160%);
+		overflow: hidden;
+		min-block-size: 260px;
+		box-shadow: var(--shadow-glass);
+	}
+
+	/* Card Hover Effects */
+	.project-card:hover {
+		transform: translateY(-4px);
+		border-color: var(--card-hover-border);
+		background-color: var(--card-glow-bg);
+		box-shadow: var(--shadow-glass),
+					0 12px 30px -10px var(--card-glow-bg),
+					0 0 2px 1px var(--card-hover-border);
+	}
+
+	/* Glass glow spot on card header */
+	.project-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15) 30%, rgba(255, 255, 255, 0.1) 70%, transparent);
+		pointer-events: none;
+	}
+
+	.card-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 16px;
+	}
+
+	/* Status Badge */
+	.status-badge {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.75rem;
+		font-family: var(--font-mono);
+		font-weight: 500;
+		color: var(--color-text-muted);
+		background: rgba(255, 255, 255, 0.03);
+		padding: 4px 8px;
+		border-radius: 99px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.status-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		display: inline-block;
+	}
+
+	.tech-icon {
+		color: var(--color-text-dim);
+		transition: color 0.25s ease;
+	}
+
+	.project-card:hover .tech-icon {
+		color: var(--accent-glow);
+	}
+
+	/* Card Body */
+	.card-body {
+		margin-bottom: 20px;
+		flex-grow: 1;
+	}
+
+	h3 {
+		font-size: 1.25rem;
+		font-weight: 650;
+		color: var(--color-text-primary);
+		margin-bottom: 8px;
+		letter-spacing: -0.01em;
+	}
+
+	/* Clickable card overlay */
+	.project-link {
+		color: inherit;
+		text-decoration: none;
+		outline: none;
+	}
+
+	.project-link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 16px;
+		z-index: 1;
+	}
+
+	.project-link:focus-visible::after {
+		outline: 2px solid var(--accent-glow);
+		outline-offset: 2px;
+	}
+
+	.description {
+		font-size: 0.925rem;
+		color: var(--color-text-muted);
+		line-height: 1.5;
+		text-wrap: pretty;
+	}
+
+	/* Tags */
+	.tags-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 20px;
+		list-style: none;
+		z-index: 2; /* keep tag interactive above link overlay if needed */
+	}
+
+	.tags-list li {
+		font-family: var(--font-mono);
+		font-size: 0.725rem;
+		color: var(--color-text-muted);
+		background: rgba(255, 255, 255, 0.03);
+		padding: 3px 8px;
+		border-radius: 4px;
+		border: 1px solid rgba(255, 255, 255, 0.04);
+		transition: border-color 0.2s, background-color 0.2s;
+	}
+
+	.project-card:hover .tags-list li {
+		border-color: rgba(255, 255, 255, 0.08);
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	/* Card Footer & Stats */
+	.card-footer {
+		margin-top: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		border-top: 1px solid rgba(255, 255, 255, 0.04);
+		padding-top: 14px;
+	}
+
+	.stats-row {
+		display: flex;
+		gap: 16px;
+		font-size: 0.8rem;
+		font-family: var(--font-mono);
+		color: var(--color-text-dim);
+	}
+
+	.stat-item {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		transition: color 0.25s ease;
+	}
+
+	.project-card:hover .stat-item {
+		color: var(--color-text-muted);
+	}
+
+	.stat-item svg {
+		opacity: 0.7;
+		transition: transform 0.25s ease, opacity 0.25s ease;
+	}
+
+	.project-card:hover .stat-item:hover svg {
+		transform: scale(1.15);
+		opacity: 1;
+		color: var(--accent-glow);
+	}
+
+	/* Dynamic Metrics Progress bar */
+	.metric-container {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.metric-header {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.75rem;
+		font-family: var(--font-mono);
+		font-weight: 500;
+	}
+
+	.metric-label {
+		color: var(--color-text-dim);
+	}
+
+	.metric-value {
+		color: var(--color-text-muted);
+	}
+
+	.project-card:hover .metric-value {
+		color: var(--accent-glow);
+		font-weight: 600;
+	}
+
+	.progress-bar-bg {
+		height: 4px;
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 99px;
+		overflow: hidden;
+	}
+
+	.progress-bar-fill {
+		height: 100%;
+		border-radius: 99px;
+		transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+		transform-origin: left;
+	}
+
+	.project-card:hover .progress-bar-fill {
+		filter: brightness(1.2);
+	}
+
+	/* Screen Reader Utility */
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>
