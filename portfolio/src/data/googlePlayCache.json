@@ -1,0 +1,158 @@
+{
+  "pl": [
+    {
+      "title": "Longevity AI",
+      "description": "Cofnij swój wiek biologiczny i zoptymalizuj zdrowie z osobistym doradcą AI.",
+      "tags": [
+        "Zdrowie i fitness"
+      ],
+      "stars": 0,
+      "forks": 5,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.github.mjaremczuk.longevityai&hl=pl&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/I20ClXgXpQGKnvhl44mKJ0xFy9YzR2vy2iLRF3zPM4JZhZ26V7gpJiSwcG7KM63_01R4kEix7pQw-ZvKdfaJ"
+    },
+    {
+      "title": "Verve",
+      "description": "Twoja codzienna dieta, źródła i cytaty motywacyjne.",
+      "tags": [
+        "Styl życia"
+      ],
+      "stars": 0,
+      "forks": 10,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.mjaremczuk.motiv&hl=pl&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/CXXO0pbb8BUEsIaJZo6CNs0MoZ4TVj-mHVCMv2N8moxSIllr4LUAHg3GLzvphV-IeXjIgaCxyEQq1L1P41XkMw"
+    },
+    {
+      "title": "Wheelsy",
+      "description": "Social app for wheel builds",
+      "tags": [
+        "Społeczności"
+      ],
+      "stars": 0,
+      "forks": 10,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=io.wheelsy&hl=pl&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/lCosW17cwKIMQ5U-YJx65WGR7aa0u8ME8UL3fZ24PLC9ggpaUh5E7Ac_bHCeFcewzxYbGCfEe_pUUXz7DoMzLA"
+    },
+    {
+      "title": "TwoSouls",
+      "description": "Odkryjcie siebie na nowo dzięki pytaniom dla par.",
+      "tags": [
+        "Rozrywka"
+      ],
+      "stars": 0,
+      "forks": 1,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.github.mjaremczuk.twosouls&hl=pl&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/uv2jmSZBHG2ZmxmFN3vChEUT1Jn1h7-Br_DnEVpkDDv5tIcY8KYy5W3-wxQCAtVssXejs9S0D_SGvHjmFKdIIg",
+      "webHref": "https://twosouls-3992f.web.app/"
+    },
+    {
+      "title": "FlashMind",
+      "description": "Nagrywaj notatki głosowe i pozwól sztucznej inteligencji organizować je w ustrukturyzowane zadania i TL;DR.",
+      "tags": [
+        "Narzędzia"
+      ],
+      "stars": 0,
+      "forks": 1,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.github.mjaremczuk.flashmind&hl=pl&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/JWE154_i4sTqvnOhB1y62GdYZn3maZvIHcznhUJlswgsKNmiXhLk-icWE-T87r4ksofab_N9gYLTIG-CXOGGag"
+    }
+  ],
+  "en": [
+    {
+      "title": "Longevity AI",
+      "description": "Cofnij swój wiek biologiczny i zoptymalizuj zdrowie z osobistym doradcą AI.",
+      "tags": [
+        "Health & Fitness"
+      ],
+      "stars": 0,
+      "forks": 5,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.github.mjaremczuk.longevityai&hl=en&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/I20ClXgXpQGKnvhl44mKJ0xFy9YzR2vy2iLRF3zPM4JZhZ26V7gpJiSwcG7KM63_01R4kEix7pQw-ZvKdfaJ"
+    },
+    {
+      "title": "Verve",
+      "description": "Twoja codzienna dawka energii, inspiracji i cytatów motywacyjnych.",
+      "tags": [
+        "Lifestyle"
+      ],
+      "stars": 0,
+      "forks": 10,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.mjaremczuk.motiv&hl=en&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/CXXO0pbb8BUEsIaJZo6CNs0MoZ4TVj-mHVCMv2N8moxSIllr4LUAHg3GLzvphV-IeXjIgaCxyEQq1L1P41XkMw"
+    },
+    {
+      "title": "Wheelsy",
+      "description": "Social app for wheel builds",
+      "tags": [
+        "Social"
+      ],
+      "stars": 0,
+      "forks": 10,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=io.wheelsy&hl=en&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/lCosW17cwKIMQ5U-YJx65WGR7aa0u8ME8UL3fZ24PLC9ggpaUh5E7Ac_bHCeFcewzxYbGCfEe_pUUXz7DoMzLA"
+    },
+    {
+      "title": "TwoSouls",
+      "description": "Rediscover each other with questions designed for couples.",
+      "tags": [
+        "Entertainment"
+      ],
+      "stars": 0,
+      "forks": 1,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.github.mjaremczuk.twosouls&hl=en&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/uv2jmSZBHG2ZmxmFN3vChEUT1Jn1h7-Br_DnEVpkDDv5tIcY8KYy5W3-wxQCAtVssXejs9S0D_SGvHjmFKdIIg",
+      "webHref": "https://twosouls-3992f.web.app/"
+    },
+    {
+      "title": "FlashMind",
+      "description": "Record voice notes and let AI organize them into structured tasks and TL;DR.",
+      "tags": [
+        "Tools"
+      ],
+      "stars": 0,
+      "forks": 1,
+      "metric": "User Score",
+      "metricValue": 100,
+      "href": "https://play.google.com/store/apps/details?id=com.github.mjaremczuk.flashmind&hl=en&gl=pl",
+      "status": "active",
+      "accent": "primary",
+      "icon": "https://play-lh.googleusercontent.com/JWE154_i4sTqvnOhB1y62GdYZn3maZvIHcznhUJlswgsKNmiXhLk-icWE-T87r4ksofab_N9gYLTIG-CXOGGag"
+    }
+  ]
+}

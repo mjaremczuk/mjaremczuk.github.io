@@ -3,13 +3,15 @@ interface Props {
 	title: string;
 	description: string;
 	tags?: string[];
-	stars?: number;
-	forks?: number;
+	stars?: number | string;
+	forks?: number | string;
 	metric?: string;
 	metricValue?: number; // 0 to 100
 	href: string;
 	status?: 'active' | 'development' | 'experimental' | 'archived';
 	accent?: 'primary' | 'secondary' | 'tertiary';
+	icon?: string;
+	webHref?: string;
 }
 
 const {
@@ -22,7 +24,9 @@ const {
 	metricValue,
 	href,
 	status = 'active',
-	accent = 'primary'
+	accent = 'primary',
+	icon,
+	webHref
 } = Astro.props;
 
 // Accent color mapping
@@ -48,11 +52,17 @@ const currentStatus = statusColors[status] || statusColors.active;
 			<span class="status-dot" style={`background-color: ${currentStatus.bg}; box-shadow: 0 0 10px ${currentStatus.bg}80;`}></span>
 			<span class="status-text">{currentStatus.text}</span>
 		</div>
-		<span class="tech-icon" aria-hidden="true">
-			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
-			</svg>
-		</span>
+		{icon ? (
+			<div class="card-custom-icon-wrapper">
+				<img src={icon} alt="" class="card-custom-icon" width="28" height="28" />
+			</div>
+		) : (
+			<span class="tech-icon" aria-hidden="true">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+				</svg>
+			</span>
+		)}
 	</header>
 
 	<!-- Project info -->
@@ -78,28 +88,30 @@ const currentStatus = statusColors[status] || statusColors.active;
 	<!-- Dynamic Stats & Progress Indicators -->
 	<footer class="card-footer">
 		<!-- Github Stats -->
-		<div class="stats-row">
-			{typeof stars === 'number' && (
-				<div class="stat-item" title={`${stars} GitHub stars`}>
-					<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-					</svg>
-					<span>{stars}</span>
-				</div>
-			)}
-			{typeof forks === 'number' && (
-				<div class="stat-item" title={`${forks} GitHub forks`}>
-					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<circle cx="18" cy="18" r="3" />
-						<circle cx="6" cy="6" r="3" />
-						<circle cx="6" cy="18" r="3" />
-						<path d="M18 15V9a4 4 0 0 0-4-4H9" />
-						<line x1="6" y1="9" x2="6" y2="15" />
-					</svg>
-					<span>{forks}</span>
-				</div>
-			)}
-		</div>
+		{(Boolean(stars) || Boolean(forks)) && (
+			<div class="stats-row">
+				{Boolean(stars) && (
+					<div class="stat-item" title={`${stars} stars`}>
+						<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+							<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+						</svg>
+						<span>{stars}</span>
+					</div>
+				)}
+				{Boolean(forks) && (
+					<div class="stat-item" title={`${forks} forks`}>
+						<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="18" cy="18" r="3" />
+							<circle cx="6" cy="6" r="3" />
+							<circle cx="6" cy="18" r="3" />
+							<path d="M18 15V9a4 4 0 0 0-4-4H9" />
+							<line x1="6" y1="9" x2="6" y2="15" />
+						</svg>
+						<span>{forks}</span>
+					</div>
+				)}
+			</div>
+		)}
 
 		<!-- Dynamic Metric (e.g. Code Coverage, Speed, Downloads) -->
 		{metric && (
@@ -196,6 +208,30 @@ const currentStatus = statusColors[status] || statusColors.active;
 
 	.project-card:hover .tech-icon {
 		color: var(--accent-glow);
+	}
+
+	.card-custom-icon-wrapper {
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+		transition: transform 0.25s ease;
+	}
+
+	.project-card:hover .card-custom-icon-wrapper {
+		transform: scale(1.08);
+	}
+
+	.card-custom-icon {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
 	}
 
 	/* Card Body */

@@ -82,6 +82,8 @@ const mobileApps = await getMobileApps(lang);
 						href={project.href}
 						status={project.status}
 						accent={project.accent}
+						icon={project.icon}
+						webHref={project.webHref}
 					/>
 				))}
 			</div>
@@ -94,7 +96,7 @@ const mobileApps = await getMobileApps(lang);
 				<p class="section-description">{t.labDescription}</p>
 			</div>
 			
-			<LivePreview client:visible apps={mobileApps} />
+			<LivePreview client:visible apps={allProjects} />
 		</section>
 
 		<!-- Footer -->
