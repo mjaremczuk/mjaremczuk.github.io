@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function LivePreview({ apps = [] }) {
 	const [selectedApp, setSelectedApp] = useState(null);
+	const [showIframe, setShowIframe] = useState(false);
 	const [emulatorTime, setEmulatorTime] = useState(new Date());
 
 	// Clock for the emulator
@@ -12,10 +13,12 @@ export default function LivePreview({ apps = [] }) {
 
 	const handleSelectApp = (app) => {
 		setSelectedApp(app);
+		setShowIframe(false);
 	};
 
 	const handleGoHome = () => {
 		setSelectedApp(null);
+		setShowIframe(false);
 	};
 
 	return (
@@ -239,6 +242,74 @@ export default function LivePreview({ apps = [] }) {
 				.web-btn:hover {
 					background: #2563eb;
 				}
+
+				.live-preview-btn {
+					background: #facc15;
+					color: #0b0c10;
+					font-weight: 700;
+				}
+
+				.live-preview-btn:hover {
+					background: #eab308;
+				}
+
+				.iframe-container {
+					display: flex;
+					flex-direction: column;
+					height: 100%;
+					width: 100%;
+					padding-top: 24px;
+					background: #0b0c10;
+					animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+				}
+
+				.iframe-toolbar {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					padding: 6px 12px;
+					background: #15181e;
+					border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+					font-size: 0.725rem;
+					color: #94a3b8;
+					font-family: var(--font-mono);
+					z-index: 15;
+				}
+
+				.iframe-back-btn, .iframe-external-btn {
+					background: transparent;
+					border: none;
+					color: #facc15;
+					cursor: pointer;
+					font-size: 0.75rem;
+					font-weight: bold;
+					padding: 3px 6px;
+					border-radius: 4px;
+					text-decoration: none;
+					display: flex;
+					align-items: center;
+					transition: background 0.2s;
+				}
+
+				.iframe-back-btn:hover, .iframe-external-btn:hover {
+					background: rgba(250, 204, 21, 0.15);
+				}
+
+				.iframe-url {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					max-width: 150px;
+					color: #e2e8f0;
+				}
+
+				.phone-iframe {
+					flex-grow: 1;
+					width: 100%;
+					height: calc(100% - 32px);
+					border: none;
+					background: #0b0c10;
+				}
 				
 				.home-bar {
 					width: 120px;
@@ -280,7 +351,7 @@ export default function LivePreview({ apps = [] }) {
 						<div className="phone-screen">
 							<div className="phone-notch"></div>
 							
-							<div className="phone-header" style={{ color: selectedApp ? '#000' : '#fff' }}>
+							<div className="phone-header" style={{ color: (selectedApp && !showIframe) ? '#000' : '#fff' }}>
 								<span>{emulatorTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
 								<span>LTE</span>
 							</div>
@@ -296,6 +367,24 @@ export default function LivePreview({ apps = [] }) {
 										</a>
 									))}
 								</div>
+							) : showIframe ? (
+								<div className="iframe-container">
+									<div className="iframe-toolbar">
+										<button onClick={() => setShowIframe(false)} className="iframe-back-btn" title="Back to app details">
+											← Wróć
+										</button>
+										<span className="iframe-url">{selectedApp.title}</span>
+										<a href={selectedApp.webHref || selectedApp.href} target="_blank" rel="noopener noreferrer" className="iframe-external-btn" title="Open in new window">
+											↗
+										</a>
+									</div>
+									<iframe 
+										src={selectedApp.webHref || selectedApp.href} 
+										title={selectedApp.title}
+										className="phone-iframe"
+										sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+									/>
+								</div>
 							) : (
 								<div className="app-view">
 									<img src={selectedApp.icon} alt={`${selectedApp.title} icon`} referrerPolicy="no-referrer" />
@@ -303,14 +392,18 @@ export default function LivePreview({ apps = [] }) {
 									<span className="company">Michał Jaremczuk</span>
 									<p>{selectedApp.description}</p>
 									<div className="button-group">
-										<a href={selectedApp.href} target="_blank" rel="noopener noreferrer" className="launch-btn">
-											Install from Google Play
-										</a>
-										{selectedApp.webHref && (
-											<a href={selectedApp.webHref} target="_blank" rel="noopener noreferrer" className="launch-btn web-btn">
-												View Web Version
+										{selectedApp.href.includes('play.google.com') ? (
+											<a href={selectedApp.href} target="_blank" rel="noopener noreferrer" className="launch-btn">
+												Install from Google Play
 											</a>
+										) : (
+											<button onClick={() => setShowIframe(true)} className="launch-btn live-preview-btn">
+												⚡ Live In-Screen Preview
+											</button>
 										)}
+										<a href={selectedApp.webHref || selectedApp.href} target="_blank" rel="noopener noreferrer" className="launch-btn web-btn">
+											{selectedApp.href.includes('play.google.com') ? 'View Web Version' : 'Open Website ↗'}
+										</a>
 									</div>
 								</div>
 							)}
